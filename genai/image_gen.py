@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+
+# This script demonstrates how to generate an image using the OctoAI API.
+
 import base64
 from io import BytesIO
 

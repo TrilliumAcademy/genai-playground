@@ -1,4 +1,6 @@
-import os
+#!/usr/bin/env python
+
+# This script demonstrates how to generate a text using the OctoAI API.
 
 from octoai.text_gen import ChatMessage
 from octoai.client import OctoAI
