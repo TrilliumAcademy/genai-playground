@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "genai-playground"
+version = "0.1.0"
+description = ""
+authors = ["Matt Welsh <matt.welsh@trilliumacademy.org>"]
+packages = [{include = "genai"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+streamlit = "^1.36.0"
+streamlit-ace = "^0.1.1"
+streamlit-agraph = "^0.0.45"
+octoai = "^1.7.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4"
+
+[tool.black]
+line-length = 120
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
