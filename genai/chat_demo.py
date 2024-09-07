@@ -3,6 +3,11 @@
 # To run:
 #  poetry run python -m streamlit run genai/chat_demo.py
 
+# This needs to come before we import other things.
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import streamlit as st
 from octoai.text_gen import ChatMessage
 from octoai.client import OctoAI

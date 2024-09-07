@@ -2,6 +2,11 @@
 
 # This script demonstrates how to generate an image using the OctoAI API.
 
+# This needs to come before we import other things.
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import base64
 from io import BytesIO
 
