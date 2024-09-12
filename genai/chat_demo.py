@@ -8,30 +8,37 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+import os
+from openai import OpenAI
 import streamlit as st
-from octoai.text_gen import ChatMessage
-from octoai.client import OctoAI
 
+# Check that our environment variables are set.
+if "OPENAI_API_KEY" not in os.environ:
+    raise ValueError("Please set the OPENAI_API_KEY environment variable.")
+
+if "HELICONE_API_KEY" not in os.environ:
+    raise ValueError("Please set the HELICONE_API_KEY environment variable.")
+
+# Create an OpenAI client. We proxy the request through Helicone so we can keep track of usage.
+client = OpenAI(
+    base_url="https://oai.helicone.ai/v1",
+    default_headers={
+        "Helicone-Auth": f"Bearer {os.environ['HELICONE_API_KEY']}",
+    },
+)
 
 st.title("AI Chat Demo")
 
 
 def do_query():
-    response = client.text_gen.create_chat_completion(
-        max_tokens=512,
+    response = client.chat.completions.create(
         messages=st.session_state.messages,
-        model="meta-llama-3.1-8b-instruct",
-        presence_penalty=0,
-        temperature=0,
-        top_p=1,
+        model="gpt-4o",
     )
-    response_message = response.choices[0].message
+    response_message = response.choices[0].message.dict()
     st.session_state.messages.append(response_message)
-    st.write(response_message.content)
+    st.write(response_message["content"])
 
-
-# Set OpenAI API key from Streamlit secrets
-client = OctoAI()
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -39,14 +46,14 @@ if "messages" not in st.session_state:
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
-    if message.role not in ["user", "assistant"]:
+    if message["role"] not in ["user", "assistant"]:
         continue
-    with st.chat_message(message.role):
-        st.markdown(message.content)
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
 # Accept user input
 if prompt := st.chat_input("Ask me anything"):
-    msg = ChatMessage(role="user", content=prompt)
+    msg = {"role": "user", "content": prompt}
     st.session_state.messages.append(msg)
     with st.chat_message("user"):
         st.markdown(prompt)

@@ -10,10 +10,10 @@ python = ">=3.10,<3.12"
 streamlit = "^1.36.0"
 streamlit-ace = "^0.1.1"
 streamlit-agraph = "^0.0.45"
-octoai = "^1.7.0"
 pillow = "^10.4.0"
 rich = "^13.8.0"
 python-dotenv = "^1.0.1"
+openai = "^1.44.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4"
