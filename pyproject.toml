@@ -6,7 +6,7 @@ authors = ["Matt Welsh <matt.welsh@trilliumacademy.org>"]
 packages = [{include = "genai"}]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.12"
+python = ">=3.10,<3.13"
 streamlit = "^1.36.0"
 streamlit-ace = "^0.1.1"
 streamlit-agraph = "^0.0.45"
