@@ -102,13 +102,15 @@ def play_wordle(client, word):
         reply, correct = process_guess(word, guess)
         console.print(f":man: {reply}")
         if correct:
-            break
+            console.print(f":tada: [green]The AI guessed the correct word in {guesses} guesses!")
+            return
         messages.append(
             {
                 "role": "user",
                 "content": reply,
             }
         )
+    console.print(f":sob: [red]The AI did not guess the correct word. The word was '{word}'.")
 
 
 # Main function called when the program is run.
