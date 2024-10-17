@@ -31,7 +31,8 @@ client = OpenAI(
     },
 )
 
-
+# See https://platform.openai.com/docs/guides/function-calling
+# for more details on the format used here.
 TOOLS = [
     {
         "type": "function",
@@ -56,6 +57,13 @@ TOOLS = [
 ]
 
 
+def generate_random_number(tool_args) -> str:
+    from_value = tool_args["from"]
+    to_value = tool_args["to"]
+    random_number = random.randint(from_value, to_value)
+    return str(random_number)
+
+
 def handle_tool_calls(tool_calls):
     response_messages = []
 
@@ -66,10 +74,7 @@ def handle_tool_calls(tool_calls):
         console.print(f"Tool call: [blue]{tool_function_name}: {tool_args}")
 
         if tool_function_name == "generate_random_number":
-            from_value = tool_args["from"]
-            to_value = tool_args["to"]
-            random_number = random.randint(from_value, to_value)
-            tool_response = str(random_number)
+            tool_response = generate_random_number(tool_args)
         else:
             console.print(f"[red]Bad tool function name: {tool_function_name}")
             tool_response = "I don't know how to handle this tool call."
